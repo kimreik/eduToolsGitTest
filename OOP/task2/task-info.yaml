@@ -1,0 +1,455 @@
+type: edu
+files:
+- name: src/Task.java
+  visible: true
+  text: |-
+    public class Task {
+
+      public static void main(String[] args) {
+        Shape shape = new Shape();
+
+        Shape unfilledBlackShape = new Shape("black", false);
+
+        Circle filledBlueCircle = new Circle(7.0, "blue", true);
+
+        Rectangle unfilledBrownRectangle = new Rectangle(1, 2, "brown", false);
+
+        Square filledYellowSquare = new Square(42, "yellow", true);
+
+        System.out.println(shape); //Shape[color=red,filled=true]
+        System.out.println(unfilledBlackShape);//Shape[color=black,filled=false]
+        System.out.println(filledBlueCircle);//Circle[Shape[color=blue,filled=true],radius=7.0]
+        System.out.println(unfilledBrownRectangle); //Rectangle[Shape[color=brown,filled=false],width=1.0,length=2.0]
+        System.out.println(filledYellowSquare); //Square[Rectangle[Shape[color=yellow,filled=true],width=42.0,length=42.0]]
+        System.out.println(filledBlueCircle.getArea()); //153.93804002589985
+        System.out.println(filledYellowSquare.getPerimeter()); //168.0
+      }
+    }
+  learner_created: false
+- name: ExerciseOOP_ShapeAndSubclasses.png
+  visible: false
+  learner_created: false
+- name: src/Shape.java
+  visible: true
+  placeholders:
+  - offset: 24
+    length: 25
+    placeholder_text: /* put class body here */
+    initial_state:
+      length: 25
+      offset: 24
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      private String color;
+        private boolean filled;
+
+        public Shape() {
+          color = "red";
+          filled = true;
+        }
+
+        public Shape(String color, boolean filled) {
+          this.color = color;
+          this.filled = filled;
+        }
+
+        public String getColor() {
+          return color;
+        }
+
+        public void setColor(String color) {
+          this.color = color;
+        }
+
+        public boolean isFilled() {
+          return filled;
+        }
+
+        public void setFilled(boolean filled) {
+          this.filled = filled;
+        }
+
+        @Override
+        public String toString() {
+          return "Shape[color=" + color + ",filled=" + filled + "]";
+        }
+  text: |
+    public class Shape {
+
+      /* put class body here */
+    }
+  learner_created: false
+- name: src/Circle.java
+  visible: true
+  placeholders:
+  - offset: 19
+    length: 17
+    placeholder_text: /* inheritance */
+    initial_state:
+      length: 17
+      offset: 19
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: ' extends Shape '
+  - offset: 41
+    length: 25
+    placeholder_text: /* put class body here */
+    initial_state:
+      length: 25
+      offset: 41
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      private double radius;
+
+        public Circle() {
+          radius = 1.0;
+        }
+
+        public Circle(double radius) {
+          this.radius = radius;
+        }
+
+        public Circle(double radius, String color, boolean filled) {
+          super(color, filled);
+          this.radius = radius;
+        }
+
+        public double getRadius() {
+          return radius;
+        }
+
+        public void setRadius(double radius) {
+          this.radius = radius;
+        }
+
+        public double getArea() {
+          return radius * radius * Math.PI;
+        }
+
+        public double getPerimeter() {
+          return 2 * radius * Math.PI;
+        }
+
+        @Override
+        public String toString() {
+          return "Circle[" + super.toString() + ",radius=" + radius + "]";
+        }
+  text: |
+    public class Circle/* inheritance */{
+
+      /* put class body here */
+    }
+  learner_created: false
+- name: test/CircleTest.java
+  visible: false
+  text: |-
+    import static org.junit.Assert.assertEquals;
+
+    import org.junit.Assert;
+    import org.junit.Test;
+
+    public class CircleTest {
+
+      @Test
+      public void defaultConstructor(){
+        Circle circle = new Circle();
+        Assert.assertEquals(1.0, circle.getRadius(), 0.01);
+      }
+
+      @Test
+      public void radiusConstructor(){
+        Circle circle = new Circle(42.0);
+        Assert.assertEquals(42.0, circle.getRadius(), 0.01);
+      }
+
+      @Test
+      public void allArgsConstructor() {
+        Circle circle = new Circle(42.0, "green", false);
+        Assert.assertEquals("green", circle.getColor());
+        Assert.assertFalse(circle.isFilled());
+        Assert.assertEquals(42.0, circle.getRadius(), 0.01);
+      }
+
+      @Test
+      public void  circleToString(){
+        Circle redFilled5 = new Circle(5, "red", true);
+        Circle greenUnfilled10 = new Circle(10, "green", false);
+
+        Assert.assertEquals("Circle[Shape[color=red,filled=true],radius=5.0]", redFilled5.toString());
+        Assert.assertEquals("Circle[Shape[color=green,filled=false],radius=10.0]", greenUnfilled10.toString());
+      }
+
+      @Test
+      public void area(){
+        Circle circle = new Circle(2.0);
+
+        //2*2*PI
+        assertEquals(12.56, circle.getArea(), 0.01);
+      }
+
+      @Test
+      public void perimeter(){
+        Circle circle = new Circle(5.0);
+
+        //2*5*PI
+        assertEquals(31.41, circle.getPerimeter(), 0.01);
+      }
+
+    }
+  learner_created: false
+- name: test/ShapeTest.java
+  visible: false
+  text: |
+    import org.junit.Assert;
+    import org.junit.Test;
+
+    public class ShapeTest {
+
+      @Test
+      public void defaultConstructor(){
+        Shape shape = new Shape();
+        Assert.assertEquals("red", shape.getColor());
+        Assert.assertTrue(shape.isFilled());
+      }
+
+      @Test
+      public void allArgsConstructor() {
+        Shape shape = new Shape("green", false);
+        Assert.assertEquals("green", shape.getColor());
+        Assert.assertFalse(shape.isFilled());
+      }
+
+      @Test
+      public void  shapeToString(){
+        Shape redFilled = new Shape("red", true);
+        Shape greenUnfilled = new Shape("green", false);
+
+        Assert.assertEquals("Shape[color=red,filled=true]", redFilled.toString());
+        Assert.assertEquals("Shape[color=green,filled=false]", greenUnfilled.toString());
+      }
+    }
+  learner_created: false
+- name: src/Rectangle.java
+  visible: true
+  placeholders:
+  - offset: 23
+    length: 17
+    placeholder_text: /* inheritance */
+    initial_state:
+      length: 17
+      offset: 23
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: extends Shape
+  - offset: 46
+    length: 25
+    placeholder_text: /* put class body here */
+    initial_state:
+      length: 25
+      offset: 46
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      private double width;
+        private double length;
+
+        public Rectangle() {
+          width = 1;
+          length = 1;
+        }
+
+        public Rectangle(double width, double length) {
+          this.width = width;
+          this.length = length;
+        }
+
+        public Rectangle(double width, double length, String color, boolean filled) {
+          super(color, filled);
+          this.width = width;
+          this.length = length;
+        }
+
+        public double getWidth() {
+          return width;
+        }
+
+        public void setWidth(double width) {
+          this.width = width;
+        }
+
+        public double getLength() {
+          return length;
+        }
+
+        public void setLength(double length) {
+          this.length = length;
+        }
+
+        public double getArea() {
+          return width * length;
+        }
+
+        public double getPerimeter() {
+          return 2 * width + 2 * length;
+        }
+
+        @Override
+        public String toString() {
+          return "Rectangle[" + super.toString() + ",width=" + width + ",length=" + length + "]";
+        }
+  text: |
+    public class Rectangle /* inheritance */ {
+
+      /* put class body here */
+    }
+  learner_created: false
+- name: test/RectangleTest.java
+  visible: false
+  text: |-
+    import static org.junit.Assert.assertEquals;
+
+    import org.junit.Assert;
+    import org.junit.Test;
+
+    public class RectangleTest {
+
+      @Test
+      public void defaultConstructor(){
+        Rectangle rectangle = new Rectangle();
+        Assert.assertEquals(1.0, rectangle.getWidth(), 0.01);
+        Assert.assertEquals(1.0, rectangle.getLength(), 0.01);
+      }
+
+      @Test
+      public void widthLengthConstructor(){
+        Rectangle rectangle = new Rectangle(42.0, 21.0);
+        Assert.assertEquals(42.0, rectangle.getWidth(), 0.01);
+        Assert.assertEquals(21.0, rectangle.getLength(), 0.01);
+      }
+
+      @Test
+      public void allArgsConstructor() {
+        Rectangle rectangle = new Rectangle(42.0, 21.0, "green", false);
+        Assert.assertEquals("green", rectangle.getColor());
+        Assert.assertFalse(rectangle.isFilled());
+        Assert.assertEquals(42.0, rectangle.getWidth(), 0.01);
+        Assert.assertEquals(21.0, rectangle.getLength(), 0.01);
+      }
+
+      @Test
+      public void rectangleToString(){
+        Rectangle redFilled5to10 = new Rectangle(5, 10, "red", true);
+        Rectangle greenUnfilled10to20 = new Rectangle(10, 20, "green", false);
+
+        Assert.assertEquals("Rectangle[Shape[color=red,filled=true],width=5.0,length=10.0]", redFilled5to10.toString());
+        Assert.assertEquals("Rectangle[Shape[color=green,filled=false],width=10.0,length=20.0]", greenUnfilled10to20.toString());
+      }
+
+      @Test
+      public void area(){
+        Rectangle rectangle = new Rectangle(5.0, 10.0);
+
+        assertEquals(50.0, rectangle.getArea(), 0.01);
+      }
+
+      @Test
+      public void perimeter(){
+        Rectangle rectangle = new Rectangle(5.0, 10.0);
+
+        assertEquals(30, rectangle.getPerimeter(), 0.01);
+      }
+
+    }
+  learner_created: false
+- name: src/Square.java
+  visible: true
+  placeholders:
+  - offset: 20
+    length: 17
+    placeholder_text: /* inheritance */
+    initial_state:
+      length: 17
+      offset: 20
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: extends Rectangle
+  - offset: 43
+    length: 25
+    placeholder_text: /* put class body here */
+    initial_state:
+      length: 25
+      offset: 43
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      public Square() {
+          super();
+        }
+
+        public Square(double side) {
+          super(side, side);
+        }
+
+        public Square(double side, String color, boolean filled) {
+          super(side, side, color, filled);
+        }
+
+        @Override
+        public void setWidth(double side) {
+          super.setWidth(side);
+          super.setLength(side);
+        }
+
+        @Override
+        public void setLength(double side) {
+          super.setWidth(side);
+          super.setLength(side);
+        }
+
+        @Override
+        public String toString() {
+          return "Square[" + super.toString() + "]";
+        }
+  text: |
+    public class Square /* inheritance */ {
+
+      /* put class body here */
+    }
+  learner_created: false
+- name: test/SquareTest.java
+  visible: false
+  text: "import static org.junit.Assert.assertEquals;\n\nimport org.junit.Assert;\n\
+    import org.junit.Test;\n\npublic class SquareTest {\n\n  @Test\n  public void\
+    \ defaultConstructor(){\n    Square square = new Square();\n    Assert.assertEquals(1.0,\
+    \ square.getWidth(), 0.01);\n    Assert.assertEquals(1.0, square.getLength(),\
+    \ 0.01);\n  }\n\n  @Test\n  public void widthLengthConstructor(){\n    Square\
+    \ square = new Square(42.0);\n    Assert.assertEquals(42.0, square.getWidth(),\
+    \ 0.01);\n    Assert.assertEquals(42.0, square.getLength(), 0.01);\n  }\n\n  @Test\n\
+    \  public void allArgsConstructor() {\n    Square square = new Square(42.0, \"\
+    green\", false);\n    Assert.assertEquals(\"green\", square.getColor());\n   \
+    \ Assert.assertFalse(square.isFilled());\n    Assert.assertEquals(42.0, square.getWidth(),\
+    \ 0.01);\n    Assert.assertEquals(42.0, square.getLength(), 0.01);\n  }\n\n  @Test\n\
+    \  public void squareToString(){\n    Square redFilled5 = new Square(5, \"red\"\
+    , true);\n    Square greenUnfilled10 = new Square(10, \"green\", false);\n\n \
+    \   Assert.assertEquals(\"Square[Rectangle[Shape[color=red,filled=true],width=5.0,length=5.0]]\"\
+    , redFilled5.toString());\n    Assert.assertEquals(\"Square[Rectangle[Shape[color=green,filled=false],width=10.0,length=10.0]]\"\
+    , greenUnfilled10.toString());\n  }\n\n  @Test\n  public void area(){\n    Square\
+    \ square = new Square(5.0);\n\n    assertEquals(25.0, square.getArea(), 0.01);\n\
+    \  }\n\n  @Test\n  public void perimeter(){\n    Square square = new Square(9.0);\n\
+    \n    assertEquals(36, square.getPerimeter(), 0.01);\n  }\n  \n  @Test\n  public\
+    \ void setWidth(){\n    Square square = new Square();\n    square.setWidth(42.0);\n\
+    \    Assert.assertEquals(42.0, square.getLength(), 0.01);\n  }\n\n  @Test\n  public\
+    \ void setLength(){\n    Square square = new Square();\n    square.setLength(42.0);\n\
+    \    Assert.assertEquals(42.0, square.getWidth(), 0.01);\n  }\n\n}"
+  learner_created: false
+status: Unchecked
+record: -1

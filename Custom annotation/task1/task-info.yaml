@@ -1,0 +1,127 @@
+type: edu
+files:
+- name: src/Task.java
+  visible: true
+  text: |-
+    public class Task {
+
+      public static void main(String[] args) {
+        CustomThreadPoolExecutor customThreadPoolExecutor = new CustomThreadPoolExecutor(10);
+        customThreadPoolExecutor.execute(new MyRunnable());
+      }
+    }
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |-
+    import static org.junit.Assert.assertEquals;
+
+    import java.util.concurrent.ExecutionException;
+    import java.util.concurrent.atomic.AtomicInteger;
+    import org.junit.Test;
+
+    public class Tests {
+      @Test
+      public void testSolution() throws InterruptedException {
+
+        AtomicInteger counter = new AtomicInteger();
+        TestRunnable command = new TestRunnable(counter);
+        new CustomThreadPoolExecutor(10)
+            .execute(command);
+        Thread.sleep(100);
+        assertEquals(42, counter.get());
+      }
+    }
+
+    @Repeat(42)
+    class TestRunnable implements Runnable{
+
+      final AtomicInteger counter;
+
+      TestRunnable(AtomicInteger counter) {
+        this.counter = counter;
+      }
+
+      @Override
+      public void run() {
+        counter.incrementAndGet();
+      }
+    }
+  learner_created: false
+- name: src/CustomThreadPoolExecutor.java
+  visible: true
+  placeholders:
+  - offset: 496
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 496
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      if (command != null) {
+                  Class<? extends Runnable> runnableClass = command.getClass();
+                  Repeat repeat = runnableClass.getAnnotation(Repeat.class);
+                  int repeatQuantity = repeat != null ? repeat.value() : 1;
+                  for (int i = 0; i < repeatQuantity; i++) {
+                      super.execute(command);
+                  }
+              }
+  text: |
+    import java.util.concurrent.LinkedBlockingQueue;
+    import java.util.concurrent.ThreadPoolExecutor;
+    import java.util.concurrent.TimeUnit;
+
+    class CustomThreadPoolExecutor extends ThreadPoolExecutor {
+        public CustomThreadPoolExecutor(final int corePoolSize) {
+            super(corePoolSize,
+                  Integer.MAX_VALUE,
+                  0,
+                  TimeUnit.MILLISECONDS,
+                  new LinkedBlockingQueue<>());
+        }
+
+        @Override
+        public void execute(final Runnable command) {
+            /* TODO */
+        }
+    }
+  learner_created: false
+- name: src/MyRunnable.java
+  visible: true
+  text: |
+    @Repeat(3)
+    class MyRunnable implements Runnable{
+        @Override
+        public void run() {
+            System.out.println("Hello!");
+        }
+    }
+  learner_created: false
+- name: src/Repeat.java
+  visible: true
+  placeholders:
+  - offset: 85
+    length: 24
+    placeholder_text: put your annotation here
+    initial_state:
+      length: 24
+      offset: 85
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      @Retention(RetentionPolicy.RUNTIME)
+      @interface Repeat {
+          int value();
+      }
+  text: |
+    import java.lang.annotation.Retention;
+    import java.lang.annotation.RetentionPolicy;
+
+    put your annotation here
+  learner_created: false
+status: Unchecked
+record: -1

@@ -1,0 +1,242 @@
+type: edu
+files:
+- name: src/Task.java
+  visible: true
+  text: |-
+    public class Task {
+
+      public static void main(String[] args) {
+        CircularQueue queue = new CircularQueue(3);
+        assert queue.isEmpty();
+        assert !queue.isFull();
+
+        assert !queue.deQueue();
+
+        queue.enQueue(1);
+        assert !queue.isEmpty();
+        assert !queue.isFull();
+
+        queue.enQueue(2);
+        assert !queue.isEmpty();
+        assert !queue.isFull();
+
+        queue.enQueue(3);
+        assert !queue.isEmpty();
+        assert queue.isFull();
+
+        assert !queue.enQueue(4);
+
+        assert queue.front() == 1;
+        assert queue.rear() == 3;
+
+        queue.deQueue();
+
+        assert queue.front() == 2;
+        assert queue.rear() == 3;
+        assert !queue.isFull();
+
+      }
+
+    }
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |-
+    import static org.junit.Assert.assertEquals;
+    import static org.junit.Assert.assertFalse;
+
+    import org.junit.Assert;
+    import org.junit.Test;
+
+    public class Tests {
+      @Test
+      public void constructorCreatesArrayOfSpecifiedSize() {
+        assertEquals(42, new CircularQueue(42).queue.length);
+      }
+
+      @Test
+      public void enQueueReturnsFalseIfQueueIsFull(){
+        CircularQueue queue = new CircularQueue(1);
+        queue.enQueue(1);
+        assertFalse(queue.enQueue(2));
+      }
+
+      @Test
+      public void deQueueReturnsFalseIfQueueIsEmpty(){
+        CircularQueue queue = new CircularQueue(1);
+        assertFalse(queue.deQueue());
+      }
+
+      @Test
+      public void deQueueDoesNotMoveTheElementsOfInternalArray(){
+        CircularQueue queue = new CircularQueue(3);
+        queue.enQueue(1);
+        queue.enQueue(2);
+        queue.enQueue(3);
+
+        assertEquals(1, queue.queue[0]);
+        assertEquals(2, queue.queue[1]);
+        assertEquals(3, queue.queue[2]);
+
+        queue.deQueue();
+
+        assertEquals(1, queue.queue[0]);
+        assertEquals(2, queue.queue[1]);
+        assertEquals(3, queue.queue[2]);
+
+        queue.enQueue(4);
+
+        assertEquals(4, queue.queue[0]);
+        assertEquals(2, queue.queue[1]);
+        assertEquals(3, queue.queue[2]);
+
+
+      }
+
+    }
+  learner_created: false
+- name: src/CircularQueue.java
+  visible: true
+  placeholders:
+  - offset: 68
+    length: 23
+    placeholder_text: put internal state here
+    initial_state:
+      length: 23
+      offset: 68
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      private final int capacity;
+          private int size;
+          private int front;
+          private int back;
+  - offset: 148
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 148
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      this.queue = new int[capacity];
+              this.capacity = capacity;
+              this.size = 0;
+              this.front = 0;
+              this.back = -1;
+  - offset: 220
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 220
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      if (size == capacity) {
+                  return false;
+              }
+              ++back;
+              queue[back % queue.length] = value;
+              ++size;
+              return true;
+  - offset: 277
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 277
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      if (size == 0) return false;
+              ++front;
+              --size;
+              return true;
+  - offset: 328
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 328
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      if (size == 0) return -1;
+              return queue[front % queue.length];
+  - offset: 377
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 377
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |2-
+       if (size == 0) return -1;
+              return queue[back % queue.length];
+  - offset: 434
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 434
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: return size == 0;
+  - offset: 490
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 490
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: return size == capacity;
+  text: |
+    public class CircularQueue {
+
+        protected final int[] queue;
+
+        put internal state here
+
+        public CircularQueue(final int capacity) {
+            /* TODO */
+        }
+
+        public boolean enQueue(final int value) {
+            /* TODO */
+        }
+
+        public boolean deQueue() {
+            /* TODO */
+        }
+
+        public int front() {
+            /* TODO */
+        }
+
+        public int rear() {
+           /* TODO */
+        }
+
+        public boolean isEmpty() {
+            /* TODO */
+        }
+
+        public boolean isFull() {
+            /* TODO */
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

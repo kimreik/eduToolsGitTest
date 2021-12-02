@@ -1,0 +1,117 @@
+type: edu
+files:
+- name: ExerciseOOP_Circle.png
+  visible: false
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |-
+    import static org.junit.Assert.assertEquals;
+
+    import java.awt.Color;
+    import org.junit.Test;
+
+    public class Tests {
+
+      @Test
+      public void defaultConstructorShouldCreateRedCircleWithRadiusOf1() {
+        Circle circle = new Circle();
+        assertEquals(1.0, circle.getRadius(), 0.0);
+        assertEquals(Color.RED, circle.getColor());
+      }
+
+      @Test
+      public void constructorWithRadiusParameter(){
+        double radius = 42.0;
+        Circle circle = new Circle(radius);
+        assertEquals(radius, circle.getRadius(), 0.01);
+        assertEquals(Color.RED, circle.getColor());
+      }
+
+      @Test
+      public void constructorWithRadiusAndColorParameters(){
+        double radius = 42.0;
+        Color color = Color.BLACK;
+
+        Circle circle = new Circle(radius, color);
+        assertEquals(radius, circle.getRadius(), 0.01);
+        assertEquals(color, circle.getColor());
+      }
+
+      @Test
+      public void areaCalculationTest() {
+        Circle circle = new Circle(2.0);
+
+
+        //2*2*PI
+        assertEquals(12.56, circle.getArea(), 0.01);
+      }
+    }
+  learner_created: false
+- name: src/Task.java
+  visible: true
+  text: |-
+    import java.awt.Color;
+
+    public class Task {
+
+      public static void main(String[] args) {
+        // Declare an instance of Circle class called c1.
+        // Construct the instance c1 by invoking the "default" constructor
+        // which sets its radius and color to their default value.
+        Circle c1 = new Circle();
+        // Invoke public methods on instance c1, via dot operator.
+        System.out.println("The circle has radius of "
+            + c1.getRadius() + " and area of " + c1.getArea());
+        //The circle has radius of 1.0 and area of 3.141592653589793
+
+        // Declare an instance of class circle called c2.
+        // Construct the instance c2 by invoking the second constructor
+        // with the given radius and default color.
+        Circle c2 = new Circle(2.0);
+        // Invoke public methods on instance c2, via dot operator.
+        System.out.println("The circle has radius of "
+            + c2.getRadius() + " and area of " + c2.getArea());
+        //The circle has radius of 2.0 and area of 12.566370614359172
+
+        Circle c3 = new Circle(2.0, Color.BLACK);
+      }
+    }
+  learner_created: false
+- name: src/Circle.java
+  visible: true
+  placeholders:
+  - offset: 118
+    length: 25
+    placeholder_text: /* put class body here */
+    initial_state:
+      length: 25
+      offset: 118
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: "// private instance variable, not accessible from\
+      \ outside this class\n   private double radius;\n   private Color color;\n \
+      \  \n   // Constructors (overloaded)\n   /** Constructs a Circle instance with\
+      \ default value for radius and color */\n   public Circle() {  // 1st (default)\
+      \ constructor\n      radius = 1.0;\n      color = Color.RED;\n   }\n   \n  \
+      \ /** Constructs a Circle instance with the given radius and default color */\n\
+      \   public Circle(double r) {  // 2nd constructor\n      radius = r;\n     \
+      \ color = Color.RED;\n   }\n  /** Constructs a Circle instance with the given\
+      \ radius and color */\n   public Circle(double r, Color c) {\n     radius =\
+      \ r;\n     color = c;\n   }\n   \n   /** Returns the radius */\n   public double\
+      \ getRadius() {\n     return radius; \n   }\n   \n   /** Returns the area of\
+      \ this Circle instance */\n   public double getArea() {\n      return radius*radius*Math.PI;\n\
+      \   }\n\n  public Color getColor() {\n    return color;\n  }"
+  text: |-
+    import java.awt.Color;
+
+    /**
+     * The Circle class models a circle with a radius and color.
+     */
+    public class Circle {
+       /* put class body here */
+    }
+  learner_created: false
+status: Unchecked
+record: -1

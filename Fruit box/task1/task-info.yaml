@@ -1,0 +1,144 @@
+type: edu
+files:
+- name: src/Task.java
+  visible: true
+  text: |-
+    public class Task {
+
+      public static void main(String[] args) {
+        Box<Apple> appleBox = new Box<>();
+        appleBox.add(new Apple(), new Apple(), new Apple());
+
+        System.out.println("appleBox.getWeight: " + appleBox.getWeight());
+
+        Box<Apple> appleBox1 = new Box<>();
+        appleBox1.add(new Apple(), new Apple(), new Apple(), new Apple());
+
+        System.out.println("appleBox1.getWeight: " + appleBox1.getWeight());
+        System.out.println("appleBox weight equals appleBox1 weight: " + appleBox.isEqualWeight(appleBox1));
+
+        Box<Orange> orangeBox = new Box<>();
+        orangeBox.add(new Orange(), new Orange());
+        System.out.println(orangeBox.getWeight());
+
+        Box<Orange> newOrangeBox = new Box<>();
+        System.out.println("orangeBox weight: " + orangeBox.getWeight());
+        System.out.println("newOrangeBox weight: " + newOrangeBox.getWeight());
+        orangeBox.sendFruits(newOrangeBox);
+        System.out.println("orangeBox weight: " + orangeBox.getWeight());
+        System.out.println("newOrangeBox weight: " + newOrangeBox.getWeight());
+      }
+    }
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |-
+    import static org.junit.Assert.assertEquals;
+
+    import org.junit.Test;
+
+    public class Tests {
+      @Test
+      public void canNotAddAppleToOrangesBox() {
+
+        Box<Orange> orangeBox = new Box<>();
+        orangeBox.add(new Orange(), new Orange());
+
+        Box<Orange> newOrangeBox = new Box<>();
+
+        orangeBox.sendFruits(newOrangeBox);
+
+        assertEquals(0, orangeBox.getFruits().size());
+        assertEquals(2, newOrangeBox.getFruits().size());
+
+      }
+    }
+  learner_created: false
+- name: src/Apple.java
+  visible: true
+  text: |+
+    public class Apple extends Fruit {
+        public Apple() {
+            super(1.0f);
+        }
+    }
+
+  learner_created: false
+- name: src/Box.java
+  visible: true
+  placeholders:
+  - offset: 81
+    length: 32
+    placeholder_text: put your Box implementation here
+    initial_state:
+      length: 32
+      offset: 81
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: |-
+      public class Box<T extends Fruit> {
+          private final ArrayList<T> fruits = new ArrayList<T>();
+
+          public ArrayList<T> getFruits() {
+              return fruits;
+          }
+
+          public void add(final T... items) {
+              this.fruits.addAll(Arrays.asList(items));
+          }
+
+          boolean isEqualWeight(final Box<? super T> box) {
+              return this.getWeight() == box.getWeight();
+          }
+
+          float getWeight() {
+              Optional<T> value = this.fruits.stream().findFirst();
+              return value.map(t -> this.fruits.size() * t.getWeight()).orElse(0F);
+          }
+
+          void sendFruits(final Box<? super T> box1) {
+              box1.getFruits().addAll(this.fruits);
+              clear();
+          }
+
+          private void clear() {
+              this.getFruits().clear();
+          }
+      }
+  text: |+
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Optional;
+
+    put your Box implementation here
+
+  learner_created: false
+- name: src/Fruit.java
+  visible: true
+  text: |+
+    public abstract class Fruit {
+        float weight;
+
+        public Fruit(float weight) {
+            this.weight = weight;
+        }
+
+        public float getWeight() {
+            return this.weight;
+        }
+    }
+
+  learner_created: false
+- name: src/Orange.java
+  visible: true
+  text: |+
+    public class Orange extends Fruit {
+        public Orange() {
+            super(1.5f);
+        }
+    }
+
+  learner_created: false
+status: Unchecked
+record: -1
