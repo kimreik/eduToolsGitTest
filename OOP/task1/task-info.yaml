@@ -81,15 +81,15 @@ files:
 - name: src/Circle.java
   visible: true
   placeholders:
-  - offset: 118
-    length: 25
+  - offset: 117
+    length: 883
     placeholder_text: /* put class body here */
     initial_state:
       length: 25
       offset: 118
     initialized_from_dependency: false
-    selected: false
-    status: Unchecked
+    selected: true
+    status: Solved
     encrypted_possible_answer: "// private instance variable, not accessible from\
       \ outside this class\n   private double radius;\n   private Color color;\n \
       \  \n   // Constructors (overloaded)\n   /** Constructs a Circle instance with\
@@ -113,5 +113,8 @@ files:
        /* put class body here */
     }
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 02 Dec 2021 07:42:25 UTC
 record: -1
